@@ -1,0 +1,18 @@
+<%= button_tag "+ Text Field", type: "button", class: "btn btn-success btn-sm", id: "add-text-field" %>
+<%= button_tag "+ Text Area Field", type: "button", class: "btn btn-success btn-sm", id: "add-text-area-field" %>
+<%= button_tag "+ Single Option", type: "button", class: "btn btn-success btn-sm", id: "add-single-option" %>
+<%= button_tag "+ Multiple Option", type: "button", class: "btn btn-success btn-sm", id: "add-multiple-option" %>
+<%= button_tag "+ Rating", type: "button", class: "btn btn-success btn-sm", id: "add-rating" %>
+<%= form_for @form do |f| %>
+  <div id="form-body">
+    <div class="row my-2">
+      <div class="form-item border shadow p-3 rounded">
+        <%= f.text_field :title, class: "form-control mb-3", placeholder: "Title" %>
+        <%= f.text_area :description, class: "form-control", placeholder: "Description" %>
+      </div>
+    </div>
+    <div id="question-list">
+    </div>
+  </div>
+  <%= f.submit "Submit", disable_with: 'Submiting...', class: "btn btn-primary" %>
+<% end %>

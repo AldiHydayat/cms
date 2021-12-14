@@ -5,3 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+if User.create({ email: "admin@gmail.com", name: "Admin", password: "asdasd", level: :admin })
+  puts "Insert admin successful"
+else
+  puts "Insert admin failed"
+end

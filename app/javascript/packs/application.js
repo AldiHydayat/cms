@@ -9,6 +9,7 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import "bootstrap"
 import jQuery from "jquery"
+import "./my_script"
 
 global.$ = global.jQuery = jQuery;
 window.$ = window.jQuery = jQuery;

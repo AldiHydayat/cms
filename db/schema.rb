@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_13_061451) do
+ActiveRecord::Schema.define(version: 2021_12_13_075524) do
 
   create_table "answers", charset: "utf8mb4", force: :cascade do |t|
     t.integer "question_id"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 2021_12_13_061451) do
     t.string "option_value"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "position"
   end
 
   create_table "questions", charset: "utf8mb4", force: :cascade do |t|
@@ -44,6 +45,7 @@ ActiveRecord::Schema.define(version: 2021_12_13_061451) do
     t.boolean "is_required"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "position"
   end
 
   create_table "users", charset: "utf8mb4", force: :cascade do |t|
