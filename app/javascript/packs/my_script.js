@@ -159,7 +159,7 @@ $("#add-multiple-option").on("click", () => {
 
     let labelRequired = $(`<label class="form-check-label" for="${setInputIdAs("is_required", index)}"> Required</label>`)
 
-    let addOptionBtn = $(`<button type="button" class="btn btn-primary btn-sm" id="add-option" value="${index + 1}">Add Option</button>`)
+    let addOptionBtn = $(`<button type="button" class="btn btn-primary btn-sm" id="add-option" value="${index}">Add Option</button>`)
 
     let optionRow = $(`<div class="row"></div>`)
     optionRow.append(labelOption).append(inputOptionText).append(inputOptionValue)
@@ -171,7 +171,7 @@ $("#add-multiple-option").on("click", () => {
 
     body.append(inputType);
     body.append(inputQuestion);
-    body.append($(`<div id='option' data-question="${index + 1}"></div>`).append(optionRow))
+    body.append($(`<div id='option' data-question="${index}"></div>`).append(optionRow))
     body.append(addOptionBtn)
     body.append($("<div class='form-check'></div>").append(checkboxRequired).append(labelRequired))
 

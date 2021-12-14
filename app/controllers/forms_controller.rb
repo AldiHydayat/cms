@@ -1,5 +1,8 @@
 class FormsController < ApplicationController
+  before_action :set_form, only: %i[show]
+
   def index
+    @forms = Form.all
   end
 
   def new
@@ -8,6 +11,7 @@ class FormsController < ApplicationController
 
   def create
     @form = Form.new(form_params)
+    # render plain: @form.inspect
     if @form.save
       flash[:notice] = "Membuat Form Berhasil"
       redirect_to forms_path
@@ -17,6 +21,10 @@ class FormsController < ApplicationController
     end
   end
 
+  def show
+    @answer = Answer.new
+  end
+
   private
 
   def form_params
@@ -24,5 +32,9 @@ class FormsController < ApplicationController
     .permit(:title, :description,
             questions_attributes: [:input_type, :question, :placeholder, :is_required,
                                    options_attributes: [:option_text, :option_value]])
+  end
+
+  def set_form
+    @form = Form.find(params[:id])
   end
 end

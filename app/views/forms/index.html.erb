@@ -1,1 +1,15 @@
 <%= link_to '+ New Form', new_form_path, class: "btn btn-success" %>
+<table class="table table-striped">
+  <thead>
+    <th>Title</th>
+    <th>Option</th>
+  </thead>
+  <tbody>
+    <% @forms.each do |form| %>
+      <tr>
+        <td><%= form.title %></td>
+        <td><%= link_to("Preview", form_path(form)) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

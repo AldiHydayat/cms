@@ -1,3 +1,9 @@
+<% if @form.errors.present? %>
+  <% @form.errors.full_messages.each do |message| %>
+    <%=  message %>
+    <br>
+  <% end %>
+<% end %>
 <%= button_tag "+ Text Field", type: "button", class: "btn btn-success btn-sm", id: "add-text-field" %>
 <%= button_tag "+ Text Area Field", type: "button", class: "btn btn-success btn-sm", id: "add-text-area-field" %>
 <%= button_tag "+ Single Option", type: "button", class: "btn btn-success btn-sm", id: "add-single-option" %>

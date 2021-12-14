@@ -1,0 +1,22 @@
+<div class="border shadow p-3 rounded my-4">
+  <h3><%= @form.title %></h3>
+  <%= simple_format(@form.description) %>
+</div>
+<%= form_for current_user, url: answers_path do |f| %>
+  <% @form.questions.each do |question| %>
+    <%= f.fields_for :answers, current_user.answers.build do |sub_f| %>
+      <div class="border shadow p-3 rounded my-4">
+        <h5><%= question.question %></h5>
+        <% if question.input_type == "text_field" %>
+          <%= render "text_field", f: sub_f, question: question %>
+        <% elsif question.input_type == "text_area" %>
+          <%= render "text_area", f: sub_f, question: question %>
+        <% elsif question.input_type == "single_option" %>
+          <%= render "single_option", f: sub_f, question: question %>
+        <% elsif question.input_type == "multiple_option" %>
+          <%= render "multiple_option", f: sub_f, question: question %>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
