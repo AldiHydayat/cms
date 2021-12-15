@@ -1,5 +1,7 @@
 class FormsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_form, only: %i[show]
+  before_action :admin_only
 
   def index
     @forms = Form.all
@@ -11,12 +13,11 @@ class FormsController < ApplicationController
 
   def create
     @form = Form.new(form_params)
-    # render plain: @form.inspect
     if @form.save
       flash[:notice] = "Membuat Form Berhasil"
       redirect_to forms_path
     else
-      flash[:notice] = "Membuat Form Berhasil"
+      flash[:notice] = "Membuat Form Gagal"
       render "new"
     end
   end
@@ -36,5 +37,12 @@ class FormsController < ApplicationController
 
   def set_form
     @form = Form.find(params[:id])
+  end
+
+  def admin_only
+    if current_user.level != "admin"
+      flash[:notice] = "Access Denied"
+      redirect_to root_path
+    end
   end
 end
