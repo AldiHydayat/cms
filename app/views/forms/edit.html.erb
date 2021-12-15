@@ -1,0 +1,65 @@
+<%= form_for @form do |f| %>
+  <div id="form-body">
+    <div class="row my-2">
+      <div class="form-item border shadow p-3 rounded">
+        <%= f.text_field :title, class: "form-control mb-3", placeholder: "Title" %>
+        <%= f.text_area :description, class: "form-control", placeholder: "Description" %>
+      </div>
+    </div>
+    <div id="question-list">
+      <% @form.questions.each do |question| %>
+        <%= f.fields_for :questions, question do |sub_f| %>
+          <div class="row my-2">
+            <div class="form-item border shadow p-3 rounded">
+              <div class="header">
+                <%= question.input_type.gsub("_", " ").titleize %>
+              </div>
+              <div class="body">
+                <%= sub_f.text_field :question, placeholder: "Question", class: "form-control mb-3" %>
+                <% if question.input_type == "single_option" || question.input_type == "multiple_option" %>
+                  <div id="option" data-question="<%= question.position %>">
+                    <% question.options.each do |option| %>
+                      <%= sub_f.fields_for :options, option do |op_f| %>
+                        <div class="row">
+                          <label class='form-label'>Option <%= option.position %></label>
+                          <%= op_f.text_field :option_text, placeholder: "Text", class: "form-control mb-3" %>
+                          <%= op_f.text_field :option_value, placeholder: "Value", class: "form-control mb-3" %>
+                        </div>
+                      <% end %>
+                    <% end %>
+                  </div>
+                  <button type="button" class="btn btn-primary btn-sm" id="add-option" value="<%= question.position %>" data-status="edit">Add Option</button>
+                <% elsif question.input_type == "rating" %>
+                  <div class="row">
+                    <% question.options.each.with_index do |option, index| %>
+                      <%= sub_f.fields_for :options, option do |op_f| %>
+                        <% if index == 0 %>
+                          <label>From</label>
+                          <%= op_f.select :option_value, options_for_select([0, 1], option.option_value) %>
+                          <%= op_f.text_field :option_text, placeholder: "Text From" %>
+                        <% else %>
+                          <label>To</label>
+                          <%= op_f.select :option_value, options_for_select([2, 3, 4, 5], option.option_value) %>
+                          <%= op_f.text_field :option_text, placeholder: "Text To" %>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  </div>
+                <% elsif question.input_type == "text_field" || question.input_type == "text_area" %>
+                  <%= sub_f.text_field :placeholder, placeholder: "Placeholder", class: "form-control mb-3"%>
+                <% end %>
+                <div class="form-check">
+                  <%= sub_f.check_box :is_required, class: "form-check-input" %>
+                  <%= sub_f.label :is_required, "Requried", class: "form-check-label" %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%= link_to "move higher", to_higher_question_path(question), method: :put %>
+          <%= link_to "move lower", to_lower_question_path(question), method: :put %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <%= f.submit "Submit", disable_with: 'Submiting...', class: "btn btn-primary" %>
+<% end %>

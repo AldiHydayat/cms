@@ -241,9 +241,8 @@ $("#add-rating").on("click", () => {
 
 $("body").on("click", "#add-option", function() {
     let question = $(this).val()
-    console.log
 
-    let index_option = $(`#option[data-question='${question}']`).children().length;
+    let index_option = $(`#option[data-question='${question}'] .row`).length;
     let labelOption = $(`<label class='form-label'>Option ${index_option + 1}</label>`)
 
     let inputOptionText = $(`<input 
@@ -264,6 +263,13 @@ $("body").on("click", "#add-option", function() {
     optionRow.append(labelOption).append(inputOptionText).append(inputOptionValue)
 
     $(`#option[data-question='${question}']`).append(optionRow)
+})
+
+$("body").on("click", "#copy-link", function() {
+    let link = $(this).data("link");
+
+    navigator.clipboard.writeText(link);
+    $(this).html("Copied")
 })
 
 function setInputIdAs(type, index) {

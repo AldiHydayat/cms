@@ -1,0 +1,12 @@
+<%= f.hidden_field :question_id, value: question.id %>
+<div class="form-check">
+  <% for x in from...(to + 1) do %>
+    <%= f.radio_button :value, x %>
+    <%= x %>
+    <% if x == from %>
+      <%= f.label :value, from_text %>
+    <% elsif x == to %>
+      <%= f.label :value, to_text %>
+    <% end %>
+  <% end %>
+</div>

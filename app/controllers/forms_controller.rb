@@ -1,6 +1,6 @@
 class FormsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_form, only: %i[show]
+  before_action :set_form, only: %i[show edit update]
   before_action :admin_only
 
   def index
@@ -26,6 +26,14 @@ class FormsController < ApplicationController
     @answer = Answer.new
   end
 
+  def edit
+  end
+
+  def update
+    @form.update(edit_form_params)
+    render plain: @form.inspect
+  end
+
   private
 
   def form_params
@@ -33,6 +41,13 @@ class FormsController < ApplicationController
     .permit(:title, :description,
             questions_attributes: [:input_type, :question, :placeholder, :is_required,
                                    options_attributes: [:option_text, :option_value]])
+  end
+
+  def edit_form_params
+    params.require("form")
+    .permit(:title, :description,
+            questions_attributes: [:input_type, :question, :placeholder, :is_required, :id,
+                                   options_attributes: [:option_text, :option_value, :id]])
   end
 
   def set_form

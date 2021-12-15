@@ -8,7 +8,11 @@
     <% @forms.each do |form| %>
       <tr>
         <td><%= form.title %></td>
-        <td><%= link_to("Preview", form_path(form)) %></td>
+        <td>
+          <%= link_to("Preview", form_path(form), class: "badge rounded-pill bg-primary link-light") %>
+          <%= link_to("Edit", edit_form_path(form), class: "badge rounded-pill bg-secondary link-light") %>
+          <span class="badge rounded-pill bg-success ms-3" id="copy-link" data-link="<%= new_form_answer_url(form) %>">Copy</span>
+        </td>
       </tr>
     <% end %>
   </tbody>
