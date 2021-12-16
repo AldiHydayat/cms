@@ -1,6 +1,6 @@
 class Option < ApplicationRecord
   has_many :answers, dependent: :destroy
-  belongs_to :question
+  belongs_to :question, optional: true
 
   acts_as_list scope: :question
 

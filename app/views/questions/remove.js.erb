@@ -1,0 +1,5 @@
+if (<%= @question.destroyed? %>) {
+	$(".row.my-2[data-question='<%= @question.id %>']").remove()
+} else {
+	$(".row.my-2[data-question='<%= @question.id %>']").append("<div class='invalid'>remove question failed</div>")
+}

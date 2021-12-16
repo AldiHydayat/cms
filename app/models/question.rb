@@ -1,5 +1,5 @@
 class Question < ApplicationRecord
-  belongs_to :form
+  belongs_to :form, optional: true
   has_many :answers, dependent: :destroy
   has_many :options, -> { order(position: :asc) }, dependent: :destroy
 
@@ -9,7 +9,8 @@ class Question < ApplicationRecord
 
   validates :question, presence: true
   validates :placeholder, presence: true, if: lambda { |question| ["text_field", "text_area"].include?(question.input_type) }
-  validates_presence_of :options, if: lambda { |question| ["single_option", "multiple_option", "rating"].include?(question.input_type) }
+
+  # validates_presence_of :options, if: lambda { |question| ["single_option", "multiple_option", "rating"].include?(question.input_type) }
 
   acts_as_list scope: :form
 

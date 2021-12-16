@@ -7,10 +7,19 @@ Rails.application.routes.draw do
     resources :answers, only: %i[new create]
   end
 
-  resources :question do
+  resources :questions do
     member do
       put "to_higher" => "questions#to_higher"
       put "to_lower" => "questions#to_lower"
+      delete "remove" => "questions#remove"
+    end
+  end
+
+  resources :options do
+    member do
+      put "to_higher" => "options#to_higher"
+      put "to_lower" => "options#to_lower"
+      delete "remove" => "options#remove"
     end
   end
 

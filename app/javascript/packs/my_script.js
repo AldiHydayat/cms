@@ -1,12 +1,13 @@
 $("#add-text-field").on("click", () => {
 
     let index = $("#question-list").children().length;
+    let time = new Date().getTime()
 
-    let row = $("<div class='row my-2'></div>")
+    let row = $(`<div class='row my-2' data-index='${time}'></div>`)
 
     let formItem = $("<div class='form-item border shadow p-3 rounded'></div>");
 
-    let header = $(`<div class='header'>${index + 1}. Text Field</div>`)
+    let header = $(`<div class='header'>Text Field</div>`)
 
     let body = $("<div class='body'></div>")
 
@@ -21,6 +22,7 @@ $("#add-text-field").on("click", () => {
     let labelRequired = $(`<label class="form-check-label" for="${setInputIdAs("is_required", index)}"> Required</label>`)
 
     row.append(formItem);
+    header.append(removeBtn(time));
 
     formItem.append(header);
     formItem.append(body);
@@ -36,12 +38,13 @@ $("#add-text-field").on("click", () => {
 
 $("#add-text-area-field").on("click", () => {
     let index = $("#question-list").children().length;
+    let time = new Date().getTime()
 
-    let row = $("<div class='row my-2'></div>")
+    let row = $(`<div class='row my-2' data-index='${time}'></div>`)
 
     let formItem = $("<div class='form-item border shadow p-3 rounded'></div>");
 
-    let header = $(`<div class='header'>${index + 1}. Text Area Field</div>`)
+    let header = $(`<div class='header'>Text Area Field</div>`)
 
     let body = $("<div class='body'></div>")
 
@@ -56,6 +59,7 @@ $("#add-text-area-field").on("click", () => {
     let labelRequired = $(`<label class="form-check-label" for="${setInputIdAs("is_required", index)}"> Required</label>`)
 
     row.append(formItem);
+    header.append(removeBtn(time));
 
     formItem.append(header);
     formItem.append(body);
@@ -72,12 +76,13 @@ $("#add-text-area-field").on("click", () => {
 
 $("#add-single-option").on("click", () => {
     let index = $("#question-list").children().length;
+    let time = new Date().getTime()
 
-    let row = $("<div class='row my-2'></div>")
+    let row = $(`<div class='row my-2' data-index='${time}'></div>`)
 
     let formItem = $("<div class='form-item border shadow p-3 rounded'></div>");
 
-    let header = $(`<div class='header'>${index + 1}. Single Option</div>`)
+    let header = $(`<div class='header'>Single Option</div>`)
 
     let body = $("<div class='body'></div>")
 
@@ -85,7 +90,7 @@ $("#add-single-option").on("click", () => {
 
     let inputQuestion = $(`<input type="text" id="${setInputIdAs("question", index)}" name="${setInputNameAs("question", index)}" placeholder="Question" class="form-control mb-3" >`)
 
-    let labelOption = $("<label class='form-label'>Option 1</label>")
+    let labelOption = $(`<label class=form-label">Option <span data-option="${time}" style="cursor:pointer;" id="remove-option" class="text-danger">remove option</span></label>`)
 
     let inputOptionText = $(`<input 
     type="text"
@@ -107,10 +112,11 @@ $("#add-single-option").on("click", () => {
 
     let addOptionBtn = $(`<button type="button" class="btn btn-primary btn-sm" id="add-option" value="${index}">Add Option</button>`)
 
-    let optionRow = $(`<div class="row"></div>`)
+    let optionRow = $(`<div class="row" data-option="${time}"></div>`)
     optionRow.append(labelOption).append(inputOptionText).append(inputOptionValue)
 
     row.append(formItem);
+    header.append(removeBtn(time));
 
     formItem.append(header);
     formItem.append(body);
@@ -126,12 +132,13 @@ $("#add-single-option").on("click", () => {
 
 $("#add-multiple-option").on("click", () => {
     let index = $("#question-list").children().length;
+    let time = new Date().getTime()
 
-    let row = $("<div class='row my-2'></div>")
+    let row = $(`<div class='row my-2' data-index='${time}'></div>`)
 
     let formItem = $("<div class='form-item border shadow p-3 rounded'></div>");
 
-    let header = $(`<div class='header'>${index + 1}. Multiple Option</div>`)
+    let header = $(`<div class='header'>Multiple Option</div>`)
 
     let body = $("<div class='body'></div>")
 
@@ -165,6 +172,7 @@ $("#add-multiple-option").on("click", () => {
     optionRow.append(labelOption).append(inputOptionText).append(inputOptionValue)
 
     row.append(formItem);
+    header.append(removeBtn(time));
 
     formItem.append(header);
     formItem.append(body);
@@ -180,12 +188,13 @@ $("#add-multiple-option").on("click", () => {
 
 $("#add-rating").on("click", () => {
     let index = $("#question-list").children().length;
+    let time = new Date().getTime()
 
-    let row = $("<div class='row my-2'></div>")
+    let row = $(`<div class='row my-2' data-index='${time}'></div>`)
 
     let formItem = $("<div class='form-item border shadow p-3 rounded'></div>");
 
-    let header = $(`<div class='header'>${index + 1}. Multiple Option</div>`)
+    let header = $(`<div class='header'>Multiple Option</div>`)
 
     let body = $("<div class='body'></div>")
 
@@ -222,6 +231,7 @@ $("#add-rating").on("click", () => {
     let labelRequired = $(`<label class="form-check-label" for="${setInputIdAs("is_required", index)}"> Required</label>`)
 
     row.append(formItem);
+    header.append(removeBtn(time));
 
     formItem.append(header);
     formItem.append(body);
@@ -241,9 +251,10 @@ $("#add-rating").on("click", () => {
 
 $("body").on("click", "#add-option", function() {
     let question = $(this).val()
+    let time = new Date().getTime()
 
     let index_option = $(`#option[data-question='${question}'] .row`).length;
-    let labelOption = $(`<label class='form-label'>Option ${index_option + 1}</label>`)
+    let labelOption = $(`<label class='form-label'>Option <span data-option="${time}" style="cursor:pointer;" id="remove-option" class="text-danger">remove option</span></label>`)
 
     let inputOptionText = $(`<input 
     type="text"
@@ -259,7 +270,7 @@ $("body").on("click", "#add-option", function() {
     id="${setOptionAttrId(setInputIdAs("options_attributes", question), index_option, "option_value")}" 
     name="${setOptionAttrName(setInputNameAs("options_attributes", question), index_option, "option_value")}">`)
 
-    let optionRow = $(`<div class="row"></div>`)
+    let optionRow = $(`<div class="row" data-option="${time}"></div>`)
     optionRow.append(labelOption).append(inputOptionText).append(inputOptionValue)
 
     $(`#option[data-question='${question}']`).append(optionRow)
@@ -271,6 +282,20 @@ $("body").on("click", "#copy-link", function() {
     navigator.clipboard.writeText(link);
     $(this).html("Copied")
 })
+
+$("body").on("click", "#remove-question", function() {
+	let index = $(this).data("index")
+	$(`.row[data-index='${index}']`).remove()
+})
+
+$("body").on("click", "#remove-option", function() {
+	let option = $(this).data("option")
+	$(`.row[data-option="${option}"]`).remove()
+})
+
+function removeBtn(index) {
+	return $(`<span id="remove-question" class="text-danger ms-3" data-index="${index}" style="cursor: pointer;">remove</span>`)
+}
 
 function setInputIdAs(type, index) {
     return `form_questions_attributes_${index}_${type}`
