@@ -30,8 +30,13 @@ class FormsController < ApplicationController
   end
 
   def update
-    @form.update(edit_form_params)
-    render plain: @form.inspect
+    if @form.update(edit_form_params)
+      flash[:notice] = "Update Form Successful"
+      redirect_to forms_path
+    else
+      flash[:notice] = "Update Failed"
+      redirect_to edit_form_path(@form)
+    end
   end
 
   private

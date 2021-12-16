@@ -1,4 +1,9 @@
 <%= form_for @form do |f| %>
+  <%= button_tag "+ Text Field", type: "button", class: "btn btn-success btn-sm", id: "add-text-field" %>
+  <%= button_tag "+ Text Area Field", type: "button", class: "btn btn-success btn-sm", id: "add-text-area-field" %>
+  <%= button_tag "+ Single Option", type: "button", class: "btn btn-success btn-sm", id: "add-single-option" %>
+  <%= button_tag "+ Multiple Option", type: "button", class: "btn btn-success btn-sm", id: "add-multiple-option" %>
+  <%= button_tag "+ Rating", type: "button", class: "btn btn-success btn-sm", id: "add-rating" %>
   <div id="form-body">
     <div class="row my-2">
       <div class="form-item border shadow p-3 rounded">
@@ -12,7 +17,7 @@
           <div class="row my-2" data-question="<%= question.id %>">
             <div class="form-item border shadow p-3 rounded">
               <div class="header">
-                <%= question.input_type.gsub("_", " ").titleize %> <%= link_to "remove question", remove_question_path(question), remote: true, method: :delete, data: {confirm: "are you sure?"} %>
+              	<%= question.input_type.gsub("_", " ").titleize %> <%= link_to "remove question", remove_question_path(question), remote: true, method: :delete, data: {confirm: "are you sure?"} %>
               </div>
               <div class="body">
                 <%= sub_f.text_field :question, placeholder: "Question", class: "form-control mb-3" %>
@@ -64,6 +69,7 @@
           </div>
         <% end %>
       <% end %>
+      
     </div>
   </div>
   <%= f.submit "Submit", disable_with: 'Submiting...', class: "btn btn-primary" %>
