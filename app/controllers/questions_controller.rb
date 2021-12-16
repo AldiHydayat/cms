@@ -11,7 +11,6 @@ class QuestionsController < ApplicationController
   def to_lower
     # Tidak Berubah
     @question.move_lower
-    debugger
     @question.save
     redirect_back(fallback_location: root_path)
   end
