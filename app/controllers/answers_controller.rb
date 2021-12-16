@@ -10,8 +10,10 @@ class AnswersController < ApplicationController
 
   def create
     # Belum Selesai
-    @user = User.new(answer_params)
-    render plain: @user.answers.inspect
+    @user = User.find(params[:user][:id])
+    debugger
+    @user.update(answer_params)
+    render plain: params[:user].inspect
   end
 
   private
@@ -29,7 +31,7 @@ class AnswersController < ApplicationController
 
   def answer_params
     params.require(:user)
-    .permit(answer_attributes: [:question_id, :value, :option_id])
+    .permit(:id, answers_attributes: [:question_id, :value, :option_id, option_id: []])
   end
 
 end

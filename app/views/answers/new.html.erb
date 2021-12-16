@@ -1,13 +1,17 @@
 <div class="border shadow p-3 rounded my-4">
   <h3><%= @form.title %></h3>
   <%= simple_format(@form.description) %>
+  <small class="text-danger">* Harus Diisi</small>
 </div>
 <%= form_for current_user, url: form_answers_path(@form), method: :post do |f| %>
+  <%= f.hidden_field :id, value: current_user.id %>
   <% @form.questions.each do |question| %>
+  <div class="border shadow p-3 rounded my-4">
+    <h5><%= question.question %><% if question.is_required %> <small class="text-danger">*</small> <% end %></h5>
+    <% if question.input_type == "multiple_option" %>
+      <%= render "forms/multiple_option", f: f, question: question %>
+    <% end %>
     <%= f.fields_for :answers, current_user.answers.build do |sub_f| %>
-      <div class="border shadow p-3 rounded my-4">
-        <h5><%= question.question %></h5>
-        <%= "Wajib" if question.is_required == true %>
         <%#= sub_f.hidden_field :user_id, value: current_user.id %>
         <% if question.input_type == "text_field" %>
           <%= render "forms/text_field", f: sub_f, question: question %>
@@ -15,8 +19,6 @@
           <%= render "forms/text_area", f: sub_f, question: question %>
         <% elsif question.input_type == "single_option" %>
           <%= render "forms/single_option", f: sub_f, question: question %>
-        <% elsif question.input_type == "multiple_option" %>
-          <%= render "forms/multiple_option", f: sub_f, question: question %>
         <% elsif question.input_type == "rating" %>
           <%= render "forms/rating", f: sub_f, question: question, from: question.options.first.option_value.to_i, to: question.options.last.option_value.to_i, from_text: question.options.first.option_text, to_text: question.options.last.option_text %>
         <% end %>

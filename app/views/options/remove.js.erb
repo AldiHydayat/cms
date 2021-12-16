@@ -1,5 +1,6 @@
 if (<%= @option.destroyed? %>) {
 	$(".row[data-option='<%= @option.id %>']").remove()
+	$("#option").find("input[value='<%= @option.id %>']").remove()
 } else {
 	$(".row[data-option='<%= @option.id %>']").append("<div class='invalid'>remove option failed</div>")
 }

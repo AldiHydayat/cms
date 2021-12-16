@@ -3,18 +3,20 @@
   <%= simple_format(@form.description) %>
 </div>
 <%= form_for current_user, url: form_answers_path(@form), method: :post do |f| %>
+  <%= f.hidden_field :id, value: current_user.id %>
   <% @form.questions.each do |question| %>
+  <div class="border shadow p-3 rounded my-4">
+    <h5><%= question.question %></h5>
+    <% if question.input_type == "multiple_option" %>
+      <%= render "forms/multiple_option", f: f, question: question %>
+    <% end %>
     <%= f.fields_for :answers, current_user.answers.build do |sub_f| %>
-      <div class="border shadow p-3 rounded my-4">
-        <h5><%= question.question %></h5>
         <% if question.input_type == "text_field" %>
           <%= render "text_field", f: sub_f, question: question %>
         <% elsif question.input_type == "text_area" %>
           <%= render "text_area", f: sub_f, question: question %>
         <% elsif question.input_type == "single_option" %>
           <%= render "single_option", f: sub_f, question: question %>
-        <% elsif question.input_type == "multiple_option" %>
-          <%= render "multiple_option", f: sub_f, question: question %>
         <% elsif question.input_type == "rating" %>
           <%= render "rating", f: sub_f, question: question, from: question.options.first.option_value.to_i, to: question.options.last.option_value.to_i, from_text: question.options.first.option_text, to_text: question.options.last.option_text %>
         <% end %>

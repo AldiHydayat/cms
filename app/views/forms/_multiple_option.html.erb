@@ -1,7 +1,9 @@
-<%= f.hidden_field :question_id, value: question.id %>
 <% question.options.each do |option| %>
-  <div class="form-check">
-    <%= f.check_box :option_id, { multiple: true, class: "form-check-input" }, option.id, nil %>
-    <%= f.label :option_id, option.option_text, for: "user_answers_attributes_2_option_id_#{option.id}", class: "form-check-label" %>
-  </div>
+  <%= f.fields_for :answers, current_user.answers.build do |sub_f| %>
+    <div class="form-check">
+      <%= sub_f.check_box :option_id, { class: "form-check-input" }, option.id, nil %>
+      <%= sub_f.label :option_id, option.option_text, for: "user_answers_attributes_2_option_id_#{option.id}", class: "form-check-label" %>
+    </div>
+    <%= sub_f.hidden_field :question_id, value: question.id %>
+  <% end %>
 <% end %>

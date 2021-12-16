@@ -12,7 +12,7 @@
       </div>
     </div>
     <div id="question-list">
-      <% @form.questions.each do |question| %>
+      <% @form.questions.each.with_index do |question, index| %>
         <%= f.fields_for :questions, question do |sub_f| %>
           <div class="row my-2" data-question="<%= question.id %>">
             <div class="form-item border shadow p-3 rounded">
@@ -22,7 +22,7 @@
               <div class="body">
                 <%= sub_f.text_field :question, placeholder: "Question", class: "form-control mb-3" %>
                 <% if question.input_type == "single_option" || question.input_type == "multiple_option" %>
-                  <div id="option" data-question="<%= question.position %>">
+                  <div id="option" data-question="<%= index %>">
                     <% question.options.each do |option| %>
                       <%= sub_f.fields_for :options, option do |op_f| %>
                         <div class="row" data-option="<%= option.id %>">
@@ -38,7 +38,7 @@
                       <% end %>
                     <% end %>
                   </div>
-                  <button type="button" class="btn btn-primary btn-sm" id="add-option" value="<%= question.position %>" data-status="edit">Add Option</button>
+                  <button type="button" class="btn btn-primary btn-sm" id="add-option" value="<%= index %>" data-status="edit">Add Option</button>
                 <% elsif question.input_type == "rating" %>
                   <div class="row">
                     <% question.options.each.with_index do |option, index| %>
