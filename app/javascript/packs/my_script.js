@@ -75,7 +75,7 @@ $("#add-text-area-field").on("click", () => {
 $("#add-single-option").on("click", () => {
     let time = new Date().getTime()
 
-    let row = $(`<div class='row my-2' data-time='${time}'></div>`)
+    let row = $(`<div class='row my-2' data-index='${time}'></div>`)
 
     let formItem = $("<div class='form-item border shadow p-3 rounded'></div>");
 
@@ -130,7 +130,7 @@ $("#add-single-option").on("click", () => {
 $("#add-multiple-option").on("click", () => {
     let time = new Date().getTime()
 
-    let row = $(`<div class='row my-2' data-time='${time}'></div>`)
+    let row = $(`<div class='row my-2' data-index='${time}'></div>`)
 
     let formItem = $("<div class='form-item border shadow p-3 rounded'></div>");
 
@@ -185,7 +185,7 @@ $("#add-multiple-option").on("click", () => {
 $("#add-rating").on("click", () => {
     let time = new Date().getTime()
 
-    let row = $(`<div class='row my-2' data-time='${time}'></div>`)
+    let row = $(`<div class='row my-2' data-index='${time}'></div>`)
 
     let formItem = $("<div class='form-item border shadow p-3 rounded'></div>");
 

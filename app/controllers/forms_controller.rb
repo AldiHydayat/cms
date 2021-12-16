@@ -1,6 +1,6 @@
 class FormsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_form, only: %i[show edit update]
+  before_action :set_form, only: %i[show edit update destroy]
   before_action :admin_only
 
   def index
@@ -37,6 +37,15 @@ class FormsController < ApplicationController
       flash[:notice] = "Update Failed"
       redirect_to edit_form_path(@form)
     end
+  end
+
+  def destroy
+    if @form.destroy
+      flash[:notice] = "Delete Form Successful"
+    else
+      flash[:notice] = "Delete Form Failed"
+    end
+      redirect_to forms_path
   end
 
   private
