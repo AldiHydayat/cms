@@ -6,7 +6,7 @@
   <%= f.hidden_field :id, value: current_user.id %>
   <% @form.questions.each do |question| %>
   <div class="border shadow p-3 rounded my-4">
-    <h5><%= question.question %></h5>
+    <h5><%= question.question %><% if question.is_required %> <small class="text-danger">*</small> <% end %></h5>
     <% if question.input_type == "multiple_option" %>
       <%= render "forms/multiple_option", f: f, question: question %>
     <% end %>

@@ -16,8 +16,14 @@
         <%= f.fields_for :questions, question do |sub_f| %>
           <div class="row my-2" data-question="<%= question.id %>">
             <div class="form-item border shadow p-3 rounded">
-              <div class="header">
-              	<%= question.input_type.gsub("_", " ").titleize %> <%= link_to "remove question", remove_question_path(question), remote: true, method: :delete, data: {confirm: "are you sure?"} %>
+              <div class="header d-flex align-items-center justify-content-between">
+                <div class="title">
+              	  <%= question.input_type.gsub("_", " ").titleize %><%= link_to "remove question", remove_question_path(question), remote: true, method: :delete, data: {confirm: "are you sure?"}, class: "ms-3" %>
+                </div>
+                <div id="action">
+                  <%= link_to (fa_icon "angle-up 2x"), to_higher_question_path(question), method: :put %>
+                  <%= link_to (fa_icon "angle-down 2x"), to_lower_question_path(question), method: :put %>
+                </div>
               </div>
               <div class="body">
                 <%= sub_f.text_field :question, placeholder: "Question", class: "form-control mb-3" %>
@@ -26,12 +32,16 @@
                     <% question.options.each do |option| %>
                       <%= sub_f.fields_for :options, option do |op_f| %>
                         <div class="row" data-option="<%= option.id %>">
-                          <label class='form-label'>
-                            Option <%= option.position %>
-                            <%= link_to "remove option", remove_option_path(option.id), remote: true, method: :delete, data: {confirm: "are you sure?"} %>
-                            <%= link_to"move higher", to_higher_option_path(option.id), method: :put %>
-                            <%= link_to"move lower", to_lower_option_path(option.id), method: :put %>
-                          </label>
+                          <div class='form-label d-flex justify-content-between'>
+                            <div>
+                              Option <%= option.position %>
+                              <%= link_to "remove option", remove_option_path(option.id), remote: true, method: :delete, data: {confirm: "are you sure?"} %>
+                            </div>
+                            <div id="action">
+                            <%= link_to (fa_icon "angle-up"), to_higher_option_path(option.id), method: :put %>
+                            <%= link_to (fa_icon "angle-down"), to_lower_option_path(option.id), method: :put %>
+                          </div>
+                          </div>
                           <%= op_f.text_field :option_text, placeholder: "Text", class: "form-control mb-3" %>
                           <%= op_f.text_field :option_value, placeholder: "Value", class: "form-control mb-3" %>
                         </div>
@@ -63,8 +73,6 @@
                   <%= sub_f.label :is_required, "Requried", class: "form-check-label" %>
                 </div>
               </div>
-              <%= link_to "move higher", to_higher_question_path(question), method: :put %>
-              <%= link_to "move lower", to_lower_question_path(question), method: :put %>
             </div>
           </div>
         <% end %>

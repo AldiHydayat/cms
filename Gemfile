@@ -29,6 +29,8 @@ gem 'devise'
 
 gem 'acts_as_list'
 
+gem 'font-awesome-rails'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 

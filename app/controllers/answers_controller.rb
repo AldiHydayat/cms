@@ -7,13 +7,15 @@ class AnswersController < ApplicationController
     @answer = Answer.new
   end
 
-
   def create
-    # Belum Selesai
     @user = User.find(params[:user][:id])
-    debugger
-    @user.update(answer_params)
-    render plain: params[:user].inspect
+    if @user.update(answer_params)
+      flash[:notice] = "Answer Form Successful"
+      redirect_to root_path
+    else
+      flash[:notice] = "Answer Form Failed"
+      render "new"
+    end
   end
 
   private
