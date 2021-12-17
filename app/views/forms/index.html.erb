@@ -13,6 +13,7 @@
           <%= link_to "Edit", edit_form_path(form), class: "badge rounded-pill bg-secondary link-light" %>
           <%= link_to "Delete", form_path(form), class: "badge rounded-pill bg-danger link-light", data: { confirm: "Are You Sure" }, method: :delete %>
           <span class="badge rounded-pill bg-success ms-3" id="copy-link" data-link="<%= new_form_answer_url(form) %>">Copy</span>
+          <%= link_to "Answers", form_answers_path(form), class: "badge rounded-pill bg-info link-light"%>
         </td>
       </tr>
     <% end %>

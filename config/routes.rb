@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root "homes#index"
 
   resources :forms do
-    resources :answers, only: %i[new create]
+    resources :answers, only: %i[index new create]
   end
 
   resources :questions do

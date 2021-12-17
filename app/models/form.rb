@@ -5,4 +5,9 @@ class Form < ApplicationRecord
 
   validates :title, :description, presence: true
   validates_presence_of :questions
+
+  def get_answers
+    questions_id = questions.pluck(:id)
+    answers = Answer.includes(:question).where(question_id: questions_id).order("questions.position ASC").group_by(&:user_id)
+  end
 end

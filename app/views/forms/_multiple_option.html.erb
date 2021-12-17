@@ -1,5 +1,5 @@
 <% question.options.each do |option| %>
-  <%= f.fields_for :answers, current_user.answers.build do |sub_f| %>
+  <%= f.fields_for :answers, current_user.answers.find_or_initialize_by(question_id: question.id) do |sub_f| %>
     <div class="form-check">
       <%= sub_f.check_box :option_id, { class: "form-check-input" }, option.id, nil %>
       <%= sub_f.label :option_id, option.option_text, for: "user_answers_attributes_2_option_id_#{option.id}", class: "form-check-label" %>

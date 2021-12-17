@@ -11,8 +11,7 @@
     <% if question.input_type == "multiple_option" %>
       <%= render "forms/multiple_option", f: f, question: question %>
     <% end %>
-    <%= f.fields_for :answers, current_user.answers.build do |sub_f| %>
-        <%#= sub_f.hidden_field :user_id, value: current_user.id %>
+    <%= f.fields_for :answers, current_user.answers.find_or_initialize_by(question_id: question.id) do |sub_f| %>
         <% if question.input_type == "text_field" %>
           <%= render "forms/text_field", f: sub_f, question: question %>
         <% elsif question.input_type == "text_area" %>

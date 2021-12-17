@@ -1,7 +1,12 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :user_only
+  before_action :user_only, except: %i[index]
+  before_action :admin_only, only: %i[index]
   before_action :set_form
+
+  def index
+    @answers = @form.get_answers
+  end
 
   def new
     @answer = Answer.new
@@ -27,13 +32,20 @@ class AnswersController < ApplicationController
     end
   end
 
+  def admin_only
+    if current_user.level != "admin"
+      flash[:notice] = "Access Denied"
+      redirect_to root_path
+    end
+  end
+
   def set_form
     @form = Form.find(params[:form_id])
   end
 
   def answer_params
     params.require(:user)
-    .permit(:id, answers_attributes: [:question_id, :value, :option_id, option_id: []])
+    .permit(:id, answers_attributes: [:id, :question_id, :value, :option_id])
   end
 
 end

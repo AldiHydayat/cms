@@ -1,0 +1,25 @@
+<table class="table table-striped">
+  <thead>
+    <% @form.questions.each do |question| %>
+      <th><%= question.question %></th>
+    <% end %>
+  </thead>
+  <tbody>
+    <% @answers.each do |user_id, answers| %>
+    <% answer_data = group_by_question(answers) %>
+    <tr>
+      <% answer_data.each do |question, ans| %>
+        <td>
+          <% ans.each do |answer| %>
+            <% if question.input_type == "multiple_option" || question.input_type == "single_option" %>
+              <%= answer.option.option_value %><br>
+            <% else %>
+              <%= answer.value %>
+            <% end %>
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
