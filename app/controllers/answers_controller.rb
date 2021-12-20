@@ -5,7 +5,8 @@ class AnswersController < ApplicationController
   before_action :set_form
 
   def index
-    @answers = @form.get_answers
+    answers_data = @form.get_answers
+    @answers = Kaminari.paginate_array(answers_data, total_count: answers_data.count).page(params[:page]).per(10)
   end
 
   def new

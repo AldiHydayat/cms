@@ -4,7 +4,7 @@ class FormsController < ApplicationController
   before_action :admin_only
 
   def index
-    @forms = Form.all
+    @forms = Form.page(params[:page])
   end
 
   def new

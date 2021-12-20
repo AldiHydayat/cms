@@ -12,7 +12,7 @@
         <td>
           <% ans.each do |answer| %>
             <% if question.input_type == "multiple_option" || question.input_type == "single_option" %>
-              <%= answer.option.option_value %><br>
+              <%= answer.option.option_value %>
             <% else %>
               <%= answer.value %>
             <% end %>
@@ -23,3 +23,4 @@
     <% end %>
   </tbody>
 </table>
+<%= paginate @answers %>

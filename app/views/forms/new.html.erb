@@ -18,6 +18,83 @@
       </div>
     </div>
     <div id="question-list">
+      <% @form.questions.each.with_index do |question, index| %>
+        <%= f.fields_for :questions, question do |sub_f| %>
+            <div class="row my-2" data-index="<%= index %>">
+              <div class="form-item border shadow p-3 rounded">
+                <% if sub_f.object.input_type == "text_field" || sub_f.object.input_type == "text_area" %>
+                  <div class="header">
+                    <%= question.input_type == "text_field" ? "Text Field" : "Text Area" %>
+                    <span id="remove-question" class="text-danger ms-3" data-index="<%= index %>" style="cursor: pointer;">remove</span>
+                  </div>
+                  <div class="body">
+                    <%= sub_f.hidden_field :input_type %>
+                    <%= sub_f.text_field :question, class: "form-control mb-3", placeholder: "Question" %>
+                    <%= sub_f.text_field :placeholder, class: "form-control mb-3", placeholder: "Placeholder" %>
+                    <div class="form-check">
+                      <%= sub_f.check_box :is_required, class: "form-check-input" %>
+                      <%= sub_f.label :is_required, class: "form-check-label" %>
+                    </div>
+                  </div>
+                <% elsif sub_f.object.input_type == "single_option" || sub_f.object.input_type == "multiple_option" %>
+                  <div class="header">
+                    <%= question.input_type == "single_option" ? "Single Option" : "Multiple Option" %>
+                    <span id="remove-question" class="text-danger ms-3" data-index="<%= index %>" style="cursor: pointer;">remove</span>
+                  </div>
+                  <div class="body">
+                    <%= sub_f.hidden_field :input_type %>
+                    <%= sub_f.text_field :question, class: "form-control mb-3", placeholder: "Question" %>
+                    <div id="option" data-question="<%= index %>">
+                      <% sub_f.object.options.each do |option| %>
+                        <div class="row" data-option="<%= index %>">
+                          <%= sub_f.fields_for :options, option do |op_f| %>
+                            <label class="form-label">
+                              Option
+                              <span data-option="<%= index %>" style="cursor:pointer;" id="remove-option" class="text-danger">remove option</span>
+                            </label>
+                            <%= op_f.text_field :option_text, class: "form-control mb-3", placeholder: "Option Text" %>
+                            <%= op_f.text_field :option_value, class: "form-control mb-3", placeholder: "Option Value" %>
+                          <% end %>
+                        </div>
+                      <% end %>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-sm" id="add-option" value="<%= index %>">Add Option</button>
+                    <div class="form-check">
+                      <%= sub_f.check_box :is_required, class: "form-check-input" %>
+                      <%= sub_f.label :is_required, class: "form-check-label" %>
+                    </div>
+                  </div>
+                <% elsif sub_f.object.input_type == "rating" %>
+                  <div class="header">
+                    Rating
+                    <span id="remove-question" class="text-danger ms-3" data-index="<%= index %>" style="cursor: pointer;">remove</span>
+                  </div>
+                  <div class="body">
+                    <%= sub_f.hidden_field :input_type %>
+                    <%= sub_f.text_field :question, class: "form-control mb-3", placeholder: "Question" %>
+                    <% question.options.each.with_index do |option, index| %>
+                        <%= sub_f.fields_for :options, option do |op_f| %>
+                          <% if index == 0 %>
+                            <label>From</label>
+                            <%= op_f.select :option_value, options_for_select([0, 1], option.option_value) %>
+                            <%= op_f.text_field :option_text, placeholder: "Text From" %>
+                          <% else %>
+                            <label>To</label>
+                            <%= op_f.select :option_value, options_for_select([2, 3, 4, 5], option.option_value) %>
+                            <%= op_f.text_field :option_text, placeholder: "Text To" %>
+                          <% end %>
+                        <% end %>
+                      <% end %>
+                    <div class="form-check">
+                      <%= sub_f.check_box :is_required, class: "form-check-input" %>
+                      <%= sub_f.label :is_required, class: "form-check-label" %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+        <% end %>
+      <% end %>
     </div>
   </div>
   <%= f.submit "Submit", disable_with: 'Submiting...', class: "btn btn-primary" %>
