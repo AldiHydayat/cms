@@ -14,6 +14,7 @@ class AnswersController < ApplicationController
 
   def create
     @user = User.find(params[:user][:id])
+
     if @user.update(answer_params)
       flash[:notice] = "Answer Form Successful"
       redirect_to root_path
@@ -44,6 +45,13 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
+    params[:user][:answers_attributes].values.each do |val|
+      if val.keys.length <= 1
+        key = params[:user][:answers_attributes].permit!.to_h.key(val)
+        params[:user][:answers_attributes].delete(key)
+      end
+    end
+
     params.require(:user)
     .permit(:id, answers_attributes: [:id, :question_id, :value, :option_id])
   end
