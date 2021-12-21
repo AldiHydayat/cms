@@ -3,26 +3,49 @@
   <%= simple_format(@form.description) %>
   <small class="text-danger">* Harus Diisi</small>
 </div>
-<%= form_for current_user, url: form_answers_path(@form), method: :post do |f| %>
-  <%= f.hidden_field :id, value: current_user.id %>
-  <% @form.questions.each do |question| %>
-  <div class="border shadow p-3 rounded my-4">
-    <h5><%= question.question %><% if question.is_required %> <small class="text-danger">*</small> <% end %></h5>
-    <% if question.input_type == "multiple_option" %>
-      <%= render "forms/multiple_option", f: f, question: question %>
+
+<% if @form.is_sign_in_required %>
+  <%= form_for current_user, url: form_answers_path(@form), method: :post do |f| %>
+    <%= f.hidden_field :id, value: current_user.id %>
+    <% @form.questions.each do |question| %>
+      <div class="border shadow p-3 rounded my-4">
+        <h5><%= question.question %><% if question.is_required %> <small class="text-danger">*</small> <% end %></h5>
+        <% if question.input_type == "multiple_option" %>
+          <%= render "forms/multiple_option", f: f, question: question %>
+        <% end %>
+        <%= f.fields_for :answers, current_user.answers.find_or_initialize_by(question_id: question.id) do |sub_f| %>
+          <% if question.input_type == "text_field" %>
+            <%= render "forms/text_field", f: sub_f, question: question %>
+          <% elsif question.input_type == "text_area" %>
+            <%= render "forms/text_area", f: sub_f, question: question %>
+          <% elsif question.input_type == "single_option" %>
+            <%= render "forms/single_option", f: sub_f, question: question %>
+          <% elsif question.input_type == "rating" %>
+            <%= render "forms/rating", f: sub_f, question: question, from: question.options.first.option_value.to_i, to: question.options.last.option_value.to_i, from_text: question.options.first.option_text, to_text: question.options.last.option_text %>
+          <% end %>
+        </div>
+      <% end %>
     <% end %>
-    <%= f.fields_for :answers, current_user.answers.find_or_initialize_by(question_id: question.id) do |sub_f| %>
+    <%= f.submit "Submit", class: "btn btn-primary" %>
+  <% end %>
+<% else %>
+  <%= form_tag form_answers_path(@form) do %>
+    <% @form.questions.each.with_index do |question, index| %>
+      <div class="border shadow p-3 rounded my-4">
+        <h5><%= question.question %><% if question.is_required %> <small class="text-danger">*</small> <% end %></h5>
         <% if question.input_type == "text_field" %>
-          <%= render "forms/text_field", f: sub_f, question: question %>
+          <%= render "text_field_tag", question: question, index: index %>
         <% elsif question.input_type == "text_area" %>
-          <%= render "forms/text_area", f: sub_f, question: question %>
+          <%= render "text_area_tag", question: question, index: index %>
         <% elsif question.input_type == "single_option" %>
-          <%= render "forms/single_option", f: sub_f, question: question %>
+          <%= render "single_option_tag", question: question, index: index %>
+        <% elsif question.input_type == "multiple_option" %>
+          <%= render "multiple_option_tag", question: question, index: index %>
         <% elsif question.input_type == "rating" %>
-          <%= render "forms/rating", f: sub_f, question: question, from: question.options.first.option_value.to_i, to: question.options.last.option_value.to_i, from_text: question.options.first.option_text, to_text: question.options.last.option_text %>
+          <%= render "rating", question: question, index: index, from: question.options.first.option_value.to_i, to: question.options.last.option_value.to_i, from_text: question.options.first.option_text, to_text: question.options.last.option_text %>
         <% end %>
       </div>
     <% end %>
+    <%= submit_tag "Submit" %>
   <% end %>
-  <%= f.submit "Submit", class: "btn btn-primary" %>
 <% end %>

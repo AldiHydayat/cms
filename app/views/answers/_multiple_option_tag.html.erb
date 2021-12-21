@@ -1,0 +1,7 @@
+<% question.options.each do |option| %>
+  <div class="form-check">
+    <%= check_box_tag "answers[#{index}][option_id]", option.id, false, { class: "form-check-input", required: question.is_required } %>
+    <%= label_tag "answers[#{index}][option_id]", option.option_text, class: "form-check-label" %>
+  </div>
+    <%= hidden_field_tag "answers[#{index}][question_id]", question.id %>
+<% end %>

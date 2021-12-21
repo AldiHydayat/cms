@@ -1,0 +1,2 @@
+<%= hidden_field_tag "answers[#{index}][question_id]", question.id %>
+<%= text_area_tag "answers[#{index}][value]", nil, { placeholder: question.placeholder, class: "form-control", required: question.is_required } %>

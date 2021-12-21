@@ -1,0 +1,12 @@
+<%= hidden_field_tag "answers[#{index}][question_id]", question.id %>
+<div class="form-check">
+  <% for x in from...(to + 1) do %>
+    <%= radio_button_tag "answers[#{index}][value]", x, required: question.is_required %>
+    <%= x %>
+    <% if x == from %>
+      <%= label_tag from_text %>
+    <% elsif x == to %>
+      <%= label_tag to_text %>
+    <% end %>
+  <% end %>
+</div>

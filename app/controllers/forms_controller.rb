@@ -52,14 +52,14 @@ class FormsController < ApplicationController
 
   def form_params
     params.require("form")
-    .permit(:title, :description,
+    .permit(:title, :description, :is_sign_in_required,
             questions_attributes: [:input_type, :question, :placeholder, :is_required,
                                    options_attributes: [:option_text, :option_value]])
   end
 
   def edit_form_params
     params.require("form")
-    .permit(:title, :description,
+    .permit(:title, :description, :is_sign_in_required,
             questions_attributes: [:input_type, :question, :placeholder, :is_required, :id,
                                    options_attributes: [:option_text, :option_value, :id]])
   end

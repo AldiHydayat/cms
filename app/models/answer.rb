@@ -1,9 +1,9 @@
 class Answer < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
   belongs_to :question
   belongs_to :option, optional: true
 
-  validates :question_id, :user_id, presence: true
+  validates :question_id, presence: true
   validates :value, presence: true, if: :is_value_require
   validates :option_id, presence: true, if: :is_option_require
 
