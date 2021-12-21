@@ -1,2 +1,2 @@
 <%= f.hidden_field :question_id, value: question.id %>
-<%= f.text_field :value, placeholder: question.placeholder, class: "form-control" %>
+<%= f.text_field :value, placeholder: question.placeholder, class: "form-control", required: question.is_required %>

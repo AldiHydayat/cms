@@ -5,6 +5,9 @@ Rails.application.routes.draw do
 
   resources :forms do
     resources :answers, only: %i[index new create]
+    member do
+      get 'summary' => 'answers#summary'
+    end
   end
 
   resources :questions do

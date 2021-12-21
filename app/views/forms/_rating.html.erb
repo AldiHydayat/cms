@@ -1,7 +1,7 @@
 <%= f.hidden_field :question_id, value: question.id %>
 <div class="form-check">
   <% for x in from...(to + 1) do %>
-    <%= f.radio_button :value, x %>
+    <%= f.radio_button :value, x, required: question.is_required %>
     <%= x %>
     <% if x == from %>
       <%= f.label :value, from_text %>

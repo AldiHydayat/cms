@@ -1,2 +1,2 @@
 <%= f.hidden_field :question_id, value: question.id %>
-<%= f.collection_radio_buttons :option_id, question.options, :id, :option_text %>
+<%= f.collection_radio_buttons :option_id, question.options, :id, :option_text, required: question.is_required %>

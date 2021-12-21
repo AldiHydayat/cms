@@ -1,8 +1,8 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :user_only, except: %i[index]
-  before_action :admin_only, only: %i[index]
-  before_action :set_form
+  before_action :user_only, except: %i[index summary]
+  before_action :admin_only, only: %i[index summary]
+  before_action :set_form, except: %i[summary]
 
   def index
     answers_data = @form.get_answers
@@ -23,6 +23,10 @@ class AnswersController < ApplicationController
       flash[:notice] = "Answer Form Failed"
       render "new"
     end
+  end
+
+  def summary
+    @form = Form.find(params[:id])
   end
 
   private

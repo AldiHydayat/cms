@@ -1,0 +1,21 @@
+<% @form.questions.each do |question| %>
+	<div class="row my-2 shadow p-3 mb-5 bg-body rounded" id="<%= question.id %>">
+		<h5><%= question.question %></h5>
+		<small><%= question.answers.count %> answers</small>
+		<% if question.input_type == "text_field" || question.input_type == "text_area" %>
+			<div style="max-height: 300px; overflow: auto;">
+				<ul class="list-group list-group-flush">
+					<% question.answers.each do |answer| %>
+					  <li class="list-group-item"><%= answer.value %></li>
+					<% end %>
+				</ul>
+			</div>
+		<% elsif question.input_type == "single_option" %>
+			<%= pie_chart question.answers.joins(:option).group(:option_value).count %>
+		<% elsif question.input_type == "multiple_option" %>
+			<%= bar_chart question.answers.joins(:option).group(:option_value).count %>
+		<% elsif question.input_type == "rating" %>
+			<%= column_chart question.answers.group(:value).count %>
+		<% end %>
+	</div>
+<% end %>
