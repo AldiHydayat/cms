@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_21_042912) do
+ActiveRecord::Schema.define(version: 2021_12_22_014756) do
 
   create_table "answers", charset: "utf8mb4", force: :cascade do |t|
     t.integer "question_id"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2021_12_21_042912) do
     t.integer "option_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "answer_count", default: 0
   end
 
   create_table "forms", charset: "utf8mb4", force: :cascade do |t|

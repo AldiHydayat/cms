@@ -4,7 +4,6 @@ class AnswersController < ApplicationController
   before_action :is_must_sign_in?, only: %i[new create]
 
   def index
-    # Belum Beres
     answers_data = @form.get_answers
     @answers = Kaminari.paginate_array(answers_data, total_count: answers_data.count).page(params[:page]).per(10)
   end
@@ -14,10 +13,10 @@ class AnswersController < ApplicationController
   end
 
   def create
-    if params[:user].present?
-      @user = User.find(params[:user][:id])
+    @count = @form.get_answers_count
 
-      if @user.update(answer_params)
+    if params[:user].present?
+      if Answer.insert_answers(answer_params[:answers_attributes].values, @count, answer_params[:id])
         flash[:notice] = "Answer Form Successful"
         redirect_to root_path
       else
@@ -25,7 +24,7 @@ class AnswersController < ApplicationController
         render "new"
       end
     else
-      @answers = Answer.create(answer_params_tag)
+      @answers = Answer.insert_answers(answer_params_tag, @count)
       if @answers
         flash[:notice] = "Answer Form Successful"
         redirect_to root_path
@@ -61,25 +60,11 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params[:user][:answers_attributes].values.each do |val|
-      if val.keys.length <= 1
-        key = params[:user][:answers_attributes].permit!.to_h.key(val)
-        params[:user][:answers_attributes].delete(key)
-      end
-    end
-
     params.require(:user)
     .permit(:id, answers_attributes: [:id, :question_id, :value, :option_id])
   end
 
   def answer_params_tag
-    params[:answers].values.each do |val|
-      if val.keys.length <= 1 || ( val[:value].blank? && val[:option_id].blank? )
-        key = params[:answers].permit!.to_h.key(val)
-        params[:answers].delete(key)
-      end
-    end
-
     params[:answers].values
   end
 

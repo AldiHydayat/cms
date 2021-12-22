@@ -25,13 +25,13 @@
 # Cek Kesehatan form
 users = User.where(level: :user)
 
-users.each do |user|
+users.each.with_index do |user, index|
 
   if user.answers.create([
-    { question_id: 61, value: user.name },
-    { question_id: 62, value: Random.rand(34...38) },
-    { question_id: 63, option_id: Random.rand(65...68) },
-    { question_id: 64, option_id: Random.rand(68...70) },
+    { question_id: 61, value: user.name, answer_count: index + 1 },
+    { question_id: 62, value: Random.rand(34...38), answer_count: index + 1 },
+    { question_id: 63, option_id: Random.rand(65...68), answer_count: index + 1 },
+    { question_id: 64, option_id: Random.rand(68...70), answer_count: index + 1 },
   ])
     puts "Insert Cek Kesehatan answer by #{user.name} Successful"
   else
@@ -40,11 +40,11 @@ users.each do |user|
 end
 
 # Daftar Vaksin
-users.each do |user|
+users.each.with_index do |user, index|
   if user.answers.create([
-    { question_id: 65, value: user.name },
-    { question_id: 66, value: Faker::IDNumber.valid },
-    { question_id: 67, option_id: Random.rand(70...72) }])
+    { question_id: 65, value: user.name, answer_count: index + 1 },
+    { question_id: 66, value: Faker::IDNumber.valid, answer_count: index + 1 },
+    { question_id: 67, option_id: Random.rand(70...72), answer_count: index + 1 }])
     puts "Insert Daftar Vaksin answer by #{user.name} Successful"
   else
     puts "Insert Daftar Vaksin answer by #{user.name} Failed!!"
